@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elias for SIT President</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(to bottom right, #ffffff, #f0f9ff, #f1f5f9);
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        /* Animated background elements */
+        .background-container {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+
+        .blob-1 {
+            width: 384px;
+            height: 384px;
+            background: #bfdbfe;
+            top: 10%;
+            left: 10%;
+            animation: blob-animation 7s infinite;
+        }
+
+        .blob-2 {
+            width: 384px;
+            height: 384px;
+            background: #99f6e4;
+            top: 50%;
+            right: 10%;
+            animation: blob-animation 7s infinite 2s;
+        }
+
+        .blob-3 {
+            width: 384px;
+            height: 384px;
+            background: #fed7aa;
+            bottom: 10%;
+            left: 50%;
+            animation: blob-animation 7s infinite 4s;
+        }
+
+        .cursor-glow {
+            position: absolute;
+            pointer-events: none;
+            border-radius: 50%;
+            mix-blend-mode: screen;
+            filter: blur(80px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cursor-glow-large {
+            width: 384px;
+            height: 384px;
+            background: linear-gradient(to right, #60a5fa, #14b8a6, #3b82f6);
+            box-shadow: 0 0 80px rgba(20, 184, 166, 0.4), 0 0 120px rgba(59, 130, 246, 0.3);
+        }
+
+        .cursor-glow-small {
+            width: 128px;
+            height: 128px;
+            background: linear-gradient(to right, #2dd4bf, #60a5fa);
+            box-shadow: 0 0 40px rgba(20, 184, 166, 0.6);
+        }
+
+        @keyframes blob-animation {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+            padding: 1rem;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #0d9488, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #334155;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #0d9488;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #0d9488, #2563eb);
+            color: white;
+            box-shadow: 0 10px 25px rgba(13, 148, 136, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #0f766e, #1e40af);
+            box-shadow: 0 15px 35px rgba(13, 148, 136, 0.4);
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            border: 2px solid #0d9488;
+            color: #0d9488;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: #f0fdfa;
+            transform: scale(1.05);
+        }
+
+        /* Main content */
+        main {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 1rem 2rem;
+        }
+
+        .hero-container {
+            max-width: 1280px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hero-content {
+            animation: fade-in-up 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #0d9488, #2563eb, #1e3a8a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content .tagline {
+            font-size: 1.5rem;
+            color: #0d9488;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1.125rem;
+            color: #475569;
+            line-height: 1.75;
+            margin-bottom: 2rem;
+            max-width: 32rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fade-in-down 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            width: 320px;
+            height: 384px;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            background: linear-gradient(to bottom right, #f1f5f9, #e0f2fe);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            border: 4px solid white;
+            transition: all 0.5s ease;
+        }
+
+        .hero-image-wrapper:hover {
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .hero-image-wrapper:hover img {
+            transform: scale(1.1);
+        }
+
+        .hero-badge {
+            position: absolute;
+            bottom: -24px;
+            right: 100px;
+            background: linear-gradient(to right, #f97316, #ef4444);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Sections */
+        section {
+            position: relative;
+            z-index: 10;
+            padding: 5rem 1rem;
+        }
+
+        .section-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fade-in 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #0d9488, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: #475569;
+        }
+
+        /* Mission Section */
+        .mission-card {
+            background: linear-gradient(to bottom right, #ffffff, #f0f9ff);
+            border: 2px solid #e2e8f0;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.5s ease;
+            animation: fade-in-up 0.8s ease-out forwards;
+            opacity: 0;
+            position: relative;
+        }
+
+        .mission-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            transform: translateY(-5px);
+        }
+
+        .mission-emoji {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.1;
+            position: absolute;
+            top: 2rem;
+        }
+
+        .mission-emoji.bottom {
+            top: auto;
+            bottom: 2rem;
+        }
+
+        .mission-card p {
+            font-size: 1.125rem;
+            color: #475569;
+            line-height: 1.75;
+            margin-bottom: 1.5rem;
+        }
+
+        .mission-card strong {
+            color: #0d9488;
+        }
+
+        .mission-card .blue-text {
+            color: #2563eb;
+        }
+
+        .mission-divider {
+            border-top: 2px solid #e2e8f0;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .mission-motto {
+            font-size: 1.25rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #0d9488, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Vision Grid */
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .vision-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            animation: fade-in-up 0.8s ease-out forwards;
+            opacity: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vision-card:hover {
+            border-color: #14b8a6;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            transform: translateY(-8px);
+        }
+
+        .vision-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(20, 184, 166, 0.05), rgba(37, 99, 235, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 1rem;
+        }
+
+        .vision-card:hover::after {
+            opacity: 1;
+        }
+
+        .vision-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .vision-card:hover .vision-icon {
+            transform: scale(1.25) rotate(12deg);
+        }
+
+        .vision-card h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+            color: #1e293b;
+            transition: color 0.3s ease;
+        }
+
+        .vision-card:hover h3 {
+            color: #0d9488;
+        }
+
+        .vision-card p {
+            color: #475569;
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        .vision-card:hover p {
+            color: #334155;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            animation: fade-in 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #0d9488, #2563eb, #1e3a8a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-section p {
+            font-size: 1.25rem;
+            color: #475569;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            padding: 1rem 3rem;
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            color: #475569;
+        }
+
+        .contact-info a {
+            color: #475569;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .contact-info a:hover {
+            color: #0d9488;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 2px solid #e2e8f0;
+            padding: 2rem 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(12px);
+            text-align: center;
+            color: #475569;
+            font-weight: 500;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Animations */
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fade-in-down {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in-visible {
+            animation: fade-in-up 0.8s ease-out forwards !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.875rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+            }
+
+            .vision-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="background-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="cursor-glow cursor-glow-large"></div>
+        <div class="cursor-glow cursor-glow-small"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">Elias for SIT</div>
+            <div class="nav-links">
+                <a href="#mission">Mission</a>
+                <a href="#vision">Vision</a>
+                <button class="btn btn-primary" onclick="scrollToSection('hero')">Vote Elias</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>Elias for SIT President</h1>
+                    <p class="tagline">"Let's Write a History for SIT"</p>
+                    <p>As SIT's first-generation students, we hold the right to define our legacy. We can build a college that promotes excellence, innovation, and solidarity for generations to come.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="handleVoteClick()">Vote For Elias</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-image-wrapper">
+                        <img src="1.jpg" alt="Elias Mihret">
+                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.2), transparent); opacity: 0; transition: opacity 0.5s ease;" class="overlay"></div>
+                    </div>
+                    <div class="hero-badge">Vote Elias</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section id="mission">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2>Our Mission</h2>
+                    <p>Building the foundation for SIT's legacy</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-emoji">✨</div>
+                    <p>We are the <strong>pioneers</strong> of this institution. Every step we take, every success we achieve sets the benchmark of the legacy of SIT for generations to come. We have the freedom to build a culture of <strong class="blue-text">curiosity, intellectual fearlessness, and deep collaboration</strong>.</p>
+                    <p>Together, we will not be trapped in the lines others made about what excellence should be. We will decide and draw our own future based on what we think it has to be. Let's challenge ourselves, challenge our professors, and open new possibilities.</p>
+                    <p><strong>Every Ethiopian is counting on us</strong> to make history. Let's make them proud and make their dreams come true.</p>
+                    <div class="mission-divider">
+                        <p class="mission-motto">Integrity First, Excellence Always. I am SIT.</p>
+                    </div>
+                    <div class="mission-emoji bottom">🎯</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vision Section -->
+        <section id="vision">
+            <div class="section-container">
+                <div class="section-header">
+                    <h2>Vision for SIT</h2>
+                    <p>Why Vote for Elias?</p>
+                </div>
+                <div class="vision-grid" id="visionGrid">
+                    <!-- Vision cards will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section>
+            <div class="section-container">
+                <div class="cta-section">
+                    <h2>Vote Elias for President</h2>
+                    <p>Be part of the first history we'll write at SIT.</p>
+                    <button class="btn btn-primary cta-button" onclick="handleVoteClick()">Vote For Elias</button>
+                    <div class="contact-info">
+                        <a href="https://t.me/Ten_Duotrigintillion_googol" target="_blank">📱 @Ten_Duotrigintillion_googol</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Elias for SIT President • "Let's Write a History for SIT" • 2025</p>
+    </footer>
+
+    <script>
+        // Vision cards data
+        const visionItems = [
+            {
+                title: "Unity & Collaboration",
+                description: "Strengthen the bond between students, departments, and clubs.",
+                icon: "🤝"
+            },
+            {
+                title: "Student Empowerment",
+                description: "Encourage new ideas, leadership, and opportunities for all.",
+                icon: "💡"
+            },
+            {
+                title: "Campus Development",
+                description: "Work with administration to improve facilities and student life.",
+                icon: "🏢"
+            },
+            {
+                title: "Transparency & Voice",
+                description: "Ensure every student's voice matters and is heard.",
+                icon: "📢"
+            },
+            {
+                title: "Integrity & Excellence",
+                description: "Help students unleash their ability with honesty.",
+                icon: "⭐"
+            },
+            {
+                title: "Innovation & Culture",
+                description: "Build a culture of curiosity, intellectual fearlessness, and collaboration.",
+                icon: "🚀"
+            }
+        ];
+
+        // Initialize vision grid
+        function initVisionGrid() {
+            const grid = document.getElementById('visionGrid');
+            visionItems.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'vision-card';
+                card.style.animationDelay = `${index * 100}ms`;
+                card.innerHTML = `
+                    <div class="vision-icon">${item.icon}</div>
+                    <h3>${item.title}</h3>
+                    <p>${item.description}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Navbar scroll effect
+        function handleNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+
+        // Cursor tracking for light effects
+        function handleMouseMove(e) {
+            const glows = document.querySelectorAll('.cursor-glow');
+            glows.forEach(glow => {
+                glow.style.left = `${e.clientX}px`;
+                glow.style.top = `${e.clientY}px`;
+                glow.style.transform = 'translate(-50%, -50%)';
+                glow.style.opacity = '0.15';
+            });
+        }
+
+        // Intersection Observer for scroll animations
+        function initIntersectionObserver() {
+            const options = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, options);
+
+            // Observe all animated elements
+            document.querySelectorAll('[data-animate], .section-header, .mission-card, .vision-card, .cta-section').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Smooth scroll to section
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Vote click handler
+        function handleVoteClick() {
+            alert('Thank you for your support! Vote for Elias for SIT President.');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initVisionGrid();
+            initIntersectionObserver();
+            
+            // Set data-animate attribute for initial animations
+            document.querySelectorAll('.hero-content, .hero-image, .section-header, .mission-card').forEach(el => {
+                el.setAttribute('data-animate', 'true');
+            });
+        });
+
+        // Event listeners
+        window.addEventListener('scroll', handleNavbarScroll);
+        window.addEventListener('mousemove', handleMouseMove);
+
+        // Prevent cursor glow opacity from staying high
+        document.addEventListener('mouseleave', () => {
+            document.querySelectorAll('.cursor-glow').forEach(glow => {
+                glow.style.opacity = '0';
+            });
+        });
+
+        document.addEventListener('mouseenter', () => {
+            document.querySelectorAll('.cursor-glow').forEach(glow => {
+                glow.style.opacity = '0.15';
+            });
+        });
+    </script>
+</body>
+</html>
+
